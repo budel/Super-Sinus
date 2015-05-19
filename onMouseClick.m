@@ -9,10 +9,32 @@ function coordinates = onMouseClick(handle, e)
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
 % Version History:
 % Ver. 0.01 initial create 18-May-2015  Initials DB and SV
+% Ver. 0.02 added circular plot 19-May-2015  Initials DB and SV
 
 axesHandle  = get(handle,'Parent');
 coordinates = get(axesHandle,'CurrentPoint'); 
-coordinates = coordinates(1,1:2);
+x = coordinates(1,1)
+y = coordinates(1,2)
+
+% Amplitude
+y0 = 1;
+% Frequency
+f = 1/(2*pi);
+% Phase
+p = 0;
+% Time
+t = 0;
+
+% fill x and y
+[x,y] = meshgrid(-2*pi:0.1:2*pi);
+% circular wave function
+r = sqrt(x.^2+y.^2);
+z = y0*sin(2*pi*(r-f*t+p));
+% plot
+contourf(x,y,z);
+% remove ticks and color plot
+set(gca,'XTick',[],'YTick',[]);
+colormap winter;
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges
