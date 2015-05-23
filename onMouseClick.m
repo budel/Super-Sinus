@@ -1,40 +1,58 @@
-function coordinates = onMouseClick(handle, e)
+function onMouseClick(h, e)
 % callback function to get Position of mouse Click
 % Used in superSinusGUI
 % Input Parameter:
-%	 handle: 		 current handle
-%    event:          current event
+%	 h: 		 handle
+%    e:          event
 %------------------------------------------------------------------------ 
 
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
 % Version History:
 % Ver. 0.01 initial create 18-May-2015  Initials DB and SV
-% Ver. 0.02 added circular plot 19-May-2015  Initials DB and SV
+% Ver. 0.10 added circular plot 19-May-2015  Initials DB and SV
+% Ver. 0.11 no fixed circular plot 23-May-2015  Initials DB and SV
+% Ver. 0.12 only 2 clicks possible 23-May-2015  Initials DB and SV
 
-axesHandle  = get(handle,'Parent');
-coordinates = get(axesHandle,'CurrentPoint'); 
-x = coordinates(1,1)
-y = coordinates(1,2)
+% Check the click count
+drawCircularWave = true;
+clickCount = get(gcf, 'UserData');
+if isempty(clickCount)
+    set( gcf, 'UserData', 1 );
+elseif clickCount == 1 
+    set( gcf, 'UserData', 2 );
+else
+    % no more circular waves!
+    drawCircularWave = false;
+end
 
-% Amplitude
-y0 = 1;
-% Frequency
-f = 1/(2*pi);
-% Phase
-p = 0;
-% Time
-t = 0;
+% get clicked position and save it for later use
+point = get( gca(), 'CurrentPoint' );
 
-% fill x and y
-[x,y] = meshgrid(-2*pi:0.1:2*pi);
-% circular wave function
-r = sqrt(x.^2+y.^2);
-z = y0*sin(2*pi*(r-f*t+p));
-% plot
-contourf(x,y,z);
-% remove ticks and color plot
-set(gca,'XTick',[],'YTick',[]);
-colormap winter;
+if drawCircularWave    
+    
+    % Amplitude
+    y0 = 1;
+    % Frequency 
+    f = 1/(2*pi);
+    % Phase
+    p = 0;
+    % Time
+    t = 0;
+    
+    % center for the circular plot
+    xClick = point(1,1);
+    yClick = point(1,2);
+
+    % fill x and y
+    [x,y] = meshgrid(-10:0.1:10);
+    % circular wave function
+    r = sqrt((x-xClick).^2+(y-yClick).^2);
+    z = y0*sin(2*pi*(r-f*t+p));
+    % plot
+    contour(x,y,z, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
+    colormap gray;
+
+end
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges

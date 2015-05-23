@@ -3,13 +3,17 @@ function superSinusGUI
 % Author: Daniel Budelmann and Sebastian Voges (c) IHA @ Jade Hochschule applied licence see EOF 
 % Version History:
 % Ver. 0.01 initial create 18-May-2015 			 Initials DB and SV
+% Ver. 0.02 changed imgHandle to hplot 23-May-2015 	 Initials DB and SV
 
 % create empty image and show it
-imObj = ones(500,500);
 figure;
-imageHandle = imshow(imObj);
+contourf([], [], []);
+axis([-10 10 -10 10]);
+hold all;
+
 % attach mouseclick callback
-set(imageHandle,'ButtonDownFcn',@onMouseClick);
+set(gca(),'ButtonDownFcn',@onMouseClick);
+
 
 
 %--------------------Licence ---------------------------------------------
