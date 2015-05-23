@@ -9,7 +9,7 @@ function superSinusGUI
 figure;
 contourf([], [], []);
 axis([-10 10 -10 10]);
-hold all;
+% hold all;
 
 % attach mouseclick callback
 set(gca(),'ButtonDownFcn',@onMouseClick);

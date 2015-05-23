@@ -1,51 +1,33 @@
-function onMouseClick(h, e)
-% callback function to get Position of mouse Click
-% Used in superSinusGUI
+function drawWaves(timer, timerInfo, point, y0, f, p, c)
+% function to do something usefull (fill out)
+% Usage [out_param] = drawSinus(in_param)
 % Input Parameter:
-%	 h: 		 handle
-%    e:          event
+%	 in_param: 		 Explain the parameter, default values, and units
+% Output Parameter:
+%	 out_param: 	 Explain the parameter, default values, and units
 %------------------------------------------------------------------------ 
+% Example: Provide example here if applicable (one or two lines) 
 
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
 % Version History:
-% Ver. 0.01 initial create 18-May-2015  Initials DB and SV
-% Ver. 0.10 added circular plot 19-May-2015  Initials DB and SV
-% Ver. 0.11 no fixed circular plot 23-May-2015  Initials DB and SV
-% Ver. 0.12 only 2 clicks possible 23-May-2015  Initials DB and SV
-% Ver. 0.20 animation 23-May-2015  Initials DB and SV
+% Ver. 0.01 initial create 23-May-2015  Initials DB and SV
 
-% Check the click count
-drawCircularWave = true;
-clickCount = get(gcf, 'UserData');
-if isempty(clickCount)
-    set( gcf, 'UserData', 1 );
-elseif clickCount == 1 
-    set( gcf, 'UserData', 2 );
-else
-    % no more circular waves!
-    drawCircularWave = false;
-end
+% get center for the circular plot
+xClick = point(1,1);
+yClick = point(1,2);
 
-% get clicked position and save it for later use
-point = get( gca(), 'CurrentPoint' );
-% Amplitude
-y0 = 1;
-% Frequency 
-f = 1/(2*pi);
-% Phase
-p = 0;
+% calculate time difference
+t = clock-c
 
-if drawCircularWave    
-    % get current time as a starting point    
-    c=clock;
-    
-    % Timer
-    t = timer('Period', 0.5, 'TimerFcn', {@drawWaves, point, y0, f, p, c}, 'ExecutionMode', 'FixedRate');
-    start(t);
-    uiwait(gcf());
-    stop(t);
-    delete(t);
-end
+% fill x and y
+[x,y] = meshgrid(-10:0.1:10);
+% circular wave function
+r = sqrt((x-xClick).^2+(y-yClick).^2);
+z = y0*sin(2*pi*(r-f*t(end)+p));
+% plot
+contour(x,y,z, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
+colormap gray;
+
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges

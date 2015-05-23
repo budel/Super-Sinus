@@ -1,51 +1,17 @@
-function onMouseClick(h, e)
-% callback function to get Position of mouse Click
-% Used in superSinusGUI
-% Input Parameter:
-%	 h: 		 handle
-%    e:          event
-%------------------------------------------------------------------------ 
-
+% Script to test the function drawSinus.m 
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
 % Version History:
-% Ver. 0.01 initial create 18-May-2015  Initials DB and SV
-% Ver. 0.10 added circular plot 19-May-2015  Initials DB and SV
-% Ver. 0.11 no fixed circular plot 23-May-2015  Initials DB and SV
-% Ver. 0.12 only 2 clicks possible 23-May-2015  Initials DB and SV
-% Ver. 0.20 animation 23-May-2015  Initials DB and SV
+% Ver. 0.01 initial create (empty) 18-May-2015 			 Initials (eg. JB)
 
-% Check the click count
-drawCircularWave = true;
-clickCount = get(gcf, 'UserData');
-if isempty(clickCount)
-    set( gcf, 'UserData', 1 );
-elseif clickCount == 1 
-    set( gcf, 'UserData', 2 );
-else
-    % no more circular waves!
-    drawCircularWave = false;
-end
+clear;
+close all;
+clc;
 
-% get clicked position and save it for later use
-point = get( gca(), 'CurrentPoint' );
-% Amplitude
-y0 = 1;
-% Frequency 
-f = 1/(2*pi);
-% Phase
-p = 0;
+%------------Your script starts here-------- 
 
-if drawCircularWave    
-    % get current time as a starting point    
-    c=clock;
-    
-    % Timer
-    t = timer('Period', 0.5, 'TimerFcn', {@drawWaves, point, y0, f, p, c}, 'ExecutionMode', 'FixedRate');
-    start(t);
-    uiwait(gcf());
-    stop(t);
-    delete(t);
-end
+%Define your parameters and adjust your function call
+[out_param] = drawWaves(in_param);
+
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges
