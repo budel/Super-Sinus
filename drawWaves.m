@@ -12,6 +12,8 @@ function drawWaves(timer, timerInfo, point, y0, f, p, c)
 % Version History:
 % Ver. 0.01 initial create 23-May-2015  Initials DB and SV
 
+global zSum;
+
 % get center for the circular plot
 xClick = point(1,1);
 yClick = point(1,2);
@@ -22,17 +24,16 @@ t = clock-c
 % fill x and y
 [x,y] = meshgrid(-4:0.1:4);
 % circular wave function
-r_old = sqrt((x-3).^2+(y-3).^2);
-z_old = y0*sin(2*pi*(r_old-f*t(end)+p));
-
 r = sqrt((x-xClick).^2+(y-yClick).^2);
-z = y0*sin(2*pi*(r-f*t(end)+p)) + z_old;
+z = y0*sin(2*pi*(r-f*t(end)+p)) + zSum;
 % plot
 contourf(x,y,z, 'ButtonDownFcn', @onMouseClick);
 colormap autumn;
 
 set(gcf(), 'Renderer', 'OpenGL')
 
+% save current wavefunction for later use:
+zSum = z;
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges

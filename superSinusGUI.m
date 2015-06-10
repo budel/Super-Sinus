@@ -9,7 +9,10 @@ function superSinusGUI
 figure;
 contourf([], [], []);
 axis([-4 4 -4 4]);
-% hold all;
+
+% first, there is no wave function
+global zSum;
+zSum = 0;
 
 % attach mouseclick callback
 set(gca(),'ButtonDownFcn',@onMouseClick);

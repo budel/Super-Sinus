@@ -13,11 +13,13 @@ function onMouseClick(h, e)
 % Ver. 0.11 no fixed circular plot 23-May-2015  Initials DB and SV
 % Ver. 0.12 only 2 clicks possible 23-May-2015  Initials DB and SV
 % Ver. 0.20 animation 23-May-2015  Initials DB and SV
+% Ver. 0.21 faster animation 10-Jun-2015 Initials DB and SV
 
 % Check the click count
 drawCircularWave = true;
 clickCount = get(gcf, 'UserData');
 if isempty(clickCount)
+%   First Wave
     set( gcf, 'UserData', 1 );
 elseif clickCount == 1 
     set( gcf, 'UserData', 2 );
