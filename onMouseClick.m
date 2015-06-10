@@ -40,7 +40,7 @@ if drawCircularWave
     c=clock;
     
     % Timer
-    t = timer('Period', 0.5, 'TimerFcn', {@drawWaves, point, y0, f, p, c}, 'ExecutionMode', 'FixedRate');
+    t = timer('Period', 1, 'TimerFcn', {@drawWaves, point, y0, f, p, c}, 'ExecutionMode', 'FixedRate');
     start(t);
     uiwait(gcf());
     stop(t);

@@ -8,7 +8,7 @@ function superSinusGUI
 % create empty image and show it
 figure;
 contourf([], [], []);
-axis([-10 10 -10 10]);
+axis([-4 4 -4 4]);
 % hold all;
 
 % attach mouseclick callback

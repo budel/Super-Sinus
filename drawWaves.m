@@ -20,13 +20,18 @@ yClick = point(1,2);
 t = clock-c
 
 % fill x and y
-[x,y] = meshgrid(-10:0.1:10);
+[x,y] = meshgrid(-4:0.1:4);
 % circular wave function
+r_old = sqrt((x-3).^2+(y-3).^2);
+z_old = y0*sin(2*pi*(r_old-f*t(end)+p));
+
 r = sqrt((x-xClick).^2+(y-yClick).^2);
-z = y0*sin(2*pi*(r-f*t(end)+p));
+z = y0*sin(2*pi*(r-f*t(end)+p)) + z_old;
 % plot
-contour(x,y,z, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
-colormap gray;
+contourf(x,y,z, 'ButtonDownFcn', @onMouseClick);
+colormap autumn;
+
+set(gcf(), 'Renderer', 'OpenGL')
 
 
 %--------------------Licence ---------------------------------------------
