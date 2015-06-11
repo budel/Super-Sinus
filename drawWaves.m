@@ -1,4 +1,4 @@
-function drawWaves(timer, timerInfo, point, y0, f, p, c)
+function drawWaves(timer, timerInfo,x,y,z)
 % function to do something usefull (fill out)
 % Usage [out_param] = drawSinus(in_param)
 % Input Parameter:
@@ -12,21 +12,18 @@ function drawWaves(timer, timerInfo, point, y0, f, p, c)
 % Version History:
 % Ver. 0.01 initial create 23-May-2015  Initials DB and SV
 
-% get center for the circular plot
-xClick = point(1,1);
-yClick = point(1,2);
+global i;
 
-% calculate time difference
-t = clock-c
+clock
 
-% fill x and y
-[x,y] = meshgrid(-10:0.1:10);
-% circular wave function
-r = sqrt((x-xClick).^2+(y-yClick).^2);
-z = y0*sin(2*pi*(r-f*t(end)+p));
 % plot
-contour(x,y,z, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
+contour(x,y,z{i}, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
 colormap gray;
+
+i=i+1;
+if i>7
+    i=1;
+end
 
 
 %--------------------Licence ---------------------------------------------
