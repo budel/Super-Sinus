@@ -8,8 +8,11 @@ function superSinusGUI
 % create empty image and show it
 figure;
 contourf([], [], []);
-axis([-10 10 -10 10]);
-% hold all;
+axis([-4 4 -4 4]);
+
+% first, there is no wave function
+global zSum;
+zSum = 0;
 
 % attach mouseclick callback
 set(gca(),'ButtonDownFcn',@onMouseClick);

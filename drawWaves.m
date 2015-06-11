@@ -14,17 +14,18 @@ function drawWaves(timer, timerInfo,x,y,z)
 
 global i;
 
+
 clock
 
 % plot
 contour(x,y,z{i}, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
-colormap gray;
+colormap autumn;
+set(gcf(), 'Renderer', 'OpenGL')
 
 i=i+1;
 if i>7
     i=1;
 end
-
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges

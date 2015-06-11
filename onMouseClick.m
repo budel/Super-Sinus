@@ -13,7 +13,9 @@ function onMouseClick(h, e)
 % Ver. 0.11 no fixed circular plot 23-May-2015  Initials DB and SV
 % Ver. 0.12 only 2 clicks possible 23-May-2015  Initials DB and SV
 % Ver. 0.20 animation 23-May-2015  Initials DB and SV
+% Ver. 0.21 faster animation 10-Jun-2015 Initials DB and SV
 
+global zSum;
 global i;
 i=1;
 
@@ -21,6 +23,7 @@ i=1;
 drawCircularWave = true;
 clickCount = get(gcf, 'UserData');
 if isempty(clickCount)
+%   First Wave
     set( gcf, 'UserData', 1 );
 elseif clickCount == 1 
     set( gcf, 'UserData', 2 );
@@ -46,19 +49,22 @@ if drawCircularWave
     xClick = point(1,1);
     yClick = point(1,2);
     
+
     % fill x and y
-    [x,y] = meshgrid(-10:0.1:10);
+    [x,y] = meshgrid(-4:0.1:4);
     % calculate time difference
     z=cell(7,1);k=1;
     for t=0:T
         % circular wave function
         r = sqrt((x-xClick).^2+(y-yClick).^2);
-        z{k} = y0*sin(2*pi*(r-f*t(end)+p));
+        z{k} = y0*sin(2*pi*(r-f*t(end)+p) + zSum);
         k=k+1;
     end
+    % save current wavefunction for later use:
+%     zSum = z;
     
     % Timer
-    t = timer('Period', 0.5, 'TimerFcn', {@drawWaves, x,y,z}, 'ExecutionMode', 'FixedRate');
+    t = timer('Period', 0.2, 'TimerFcn', {@drawWaves, x,y,z}, 'ExecutionMode', 'FixedRate');
     start(t);
     uiwait(gcf());
     stop(t);
