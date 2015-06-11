@@ -4,15 +4,25 @@ function superSinusGUI
 % Version History:
 % Ver. 0.01 initial create 18-May-2015 			 Initials DB and SV
 % Ver. 0.02 changed imgHandle to hplot 23-May-2015 	 Initials DB and SV
+% Ver. 0.03 parameters global 11-Jun-2015 Initials DB and SV
 
 % create empty image and show it
 figure;
 contourf([], [], []);
 axis([-4 4 -4 4]);
 
+% Amplitude
+global y0; y0 = 1;
+% Frequency 
+global f; f = 1/10;
+T = 1/f;
+% Phase
+global p; p = 0;
+
 % first, there is no wave function
 global zSum;
-zSum = 0;
+zSum = cell(T,1);
+zSum(:) = {0};
 
 % attach mouseclick callback
 set(gca(),'ButtonDownFcn',@onMouseClick);

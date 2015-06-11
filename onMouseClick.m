@@ -14,62 +14,50 @@ function onMouseClick(h, e)
 % Ver. 0.12 only 2 clicks possible 23-May-2015  Initials DB and SV
 % Ver. 0.20 animation 23-May-2015  Initials DB and SV
 % Ver. 0.21 faster animation 10-Jun-2015 Initials DB and SV
+% Ver. 0.22 animation an calculation seperated 11-Jun-2015 Initials DB and SV
+% Ver. 0.23 parameters global 11-Jun-2015 Initials DB and SV
 
+global myTimer;
 global zSum;
 global i;
+global y0;
+global f;
+T = 1/f;
+global p;
 i=1;
 
-% Check the click count
-drawCircularWave = true;
-clickCount = get(gcf, 'UserData');
-if isempty(clickCount)
-%   First Wave
-    set( gcf, 'UserData', 1 );
-elseif clickCount == 1 
-    set( gcf, 'UserData', 2 );
-else
-    % no more circular waves!
-    drawCircularWave = false;
+% stop old timers if exist
+if ~isempty(timerfind)
+    stop(timerfind);
+    delete(timerfind);
 end
 
 % get clicked position and save it for later use
 point = get( gca(), 'CurrentPoint' );
-% Amplitude
-y0 = 1;
-% Frequency 
-f = 1/(2*pi);
-T = 1/f;
-% Phase
-p = 0;
 
-if drawCircularWave    
-    
-    % z = calculateWave(point, y0, f, p, c)
-    % get center for the circular plot
-    xClick = point(1,1);
-    yClick = point(1,2);
-    
+% get center for the circular plot
+xClick = point(1,1);
+yClick = point(1,2);
 
-    % fill x and y
-    [x,y] = meshgrid(-4:0.1:4);
-    % calculate time difference
-    z=cell(7,1);k=1;
-    for t=0:T
-        % circular wave function
-        r = sqrt((x-xClick).^2+(y-yClick).^2);
-        z{k} = y0*sin(2*pi*(r-f*t(end)+p) + zSum);
-        k=k+1;
-    end
+% fill x and y
+[x,y] = meshgrid(-4:.1:4);
+
+% calculate time difference
+z=cell(T,1);k=0;
+for t=0:T-1
+    k=k+1;
+    % circular wave function
+    r = sqrt((x-xClick).^2+(y-yClick).^2);
+    z{k} = y0*sin(2*pi*( r-f*t+p) ) + zSum{k};
+
     % save current wavefunction for later use:
-%     zSum = z;
-    
-    % Timer
-    t = timer('Period', 0.2, 'TimerFcn', {@drawWaves, x,y,z}, 'ExecutionMode', 'FixedRate');
-    start(t);
-    uiwait(gcf());
-    stop(t);
-    delete(t);
+    zSum{k} = z{k};
 end
+
+% Timer
+myTimer = timer('Period', 1/2, 'TimerFcn', {@drawWaves, x,y,z}, 'ExecutionMode', 'FixedRate');
+start(myTimer);
+uiwait(gcf());
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges

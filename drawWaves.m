@@ -11,19 +11,20 @@ function drawWaves(timer, timerInfo,x,y,z)
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
 % Version History:
 % Ver. 0.01 initial create 23-May-2015  Initials DB and SV
+% Ver. 0.02 faster animation 10-Jun-2015 Initials DB and SV
+% Ver. 0.03 animation an calculation seperated 11-Jun-2015 Initials DB and SV
 
 global i;
-
-
-clock
+global f;
+T = 1/f;
 
 % plot
-contour(x,y,z{i}, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
+set(gcf(), 'Renderer', 'OpenGL');
+contourf(x,y,z{i}, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
 colormap autumn;
-set(gcf(), 'Renderer', 'OpenGL')
 
 i=i+1;
-if i>7
+if i>T
     i=1;
 end
 
