@@ -6,6 +6,7 @@ function superSinusGUI
 % Ver. 0.02 changed imgHandle to hplot 23-May-2015 	 Initials DB and SV
 % Ver. 0.03 parameters global 11-Jun-2015 Initials DB and SV
 % Ver. 0.04 GUI with buttons 13-Jun-2015 Initials DB and SV
+% Ver. 0.10 functional GUI with rainbow color 13-Jun-2015 Initials DB and SV
 
 % default values:
 % Amplitude
@@ -23,16 +24,16 @@ contourf([], [], []);
 axis([-4 4 -4 4]);
 set(wavePlot, 'xtick',[], 'ytick',[]);
 
-% % draw rest of the GUI
-% posL = 500; posD = 410;
-% w = 140; h = 40;
-% uicontrol('style','text', 'string','Amplitude:','BackgroundColor',[1 0 1],'FontSize',20, 'position', [posL posD w h]);
-% uicontrol('style','text', 'string','Frequency:','BackgroundColor',[1 1 0],'FontSize',20, 'position', [posL posD-h w h]);
-% uicontrol('style','text', 'string','Phase:','BackgroundColor',[0 1 1],'FontSize',20, 'position', [posL posD-2*h w h]);
-% frequency = uicontrol('style','edit', 'string',num2str(f), 'BackgroundColor',[1 1 0.5],'FontSize',10, 'position', [posL+w posD w h]);
-% amplitude = uicontrol('style','edit', 'string',num2str(y0), 'BackgroundColor',[1 0.7 0],'FontSize',10, 'position', [posL+w posD-h w h]);
-% phase = uicontrol('style','edit', 'string',num2str(p), 'BackgroundColor',[0.8 1 1],'FontSize',10, 'position', [posL+w posD-2*h w h]);
-% uicontrol('style', 'pushbutton', 'string', 'submit','Callback',{@callbackGUI,frequency,amplitude,phase},'BackgroundColor',[0 1 1],'FontSize',20, 'position', [posL+w/2 posD-4*h w h]);
+% draw rest of the GUI
+posL = 500; posD = 410;
+w = 140; h = 40;
+uicontrol('style','text', 'string','Amplitude:','BackgroundColor',[1 0 0],'FontSize',20, 'position', [posL posD w h]);
+amplitude = uicontrol('style','edit', 'string',num2str(y0), 'BackgroundColor',[1 0.5 0],'FontSize',10, 'position', [posL+w posD w h]);
+uicontrol('style','text', 'string','Frequency:','BackgroundColor',[1 1 0],'FontSize',20, 'position', [posL posD-h w h]);
+frequency = uicontrol('style','edit', 'string',num2str(f), 'BackgroundColor',[0 1 0],'FontSize',10, 'position', [posL+w posD-h w h]);
+uicontrol('style','text', 'string','Phase:','BackgroundColor',[0 0.5 0],'FontSize',20, 'position', [posL posD-2*h w h]);
+phase = uicontrol('style','edit', 'string',num2str(p), 'BackgroundColor',[0 0 1],'FontSize',10, 'position', [posL+w posD-2*h w h]);
+uicontrol('style', 'pushbutton', 'string', 'submit','Callback',{@callbackGUI,frequency,amplitude,phase},'BackgroundColor',[0.7 0 1],'FontSize',20, 'position', [posL+w/2 posD-4*h w h]);
 
 % attach mouseclick callback
 set(gca(),'ButtonDownFcn',@onMouseClick);

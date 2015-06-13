@@ -1,4 +1,4 @@
-function drawWaves(timer, timerInfo,x,y,z, res)
+function drawWaves(timer, timerInfo,x,y,z, frames)
 % function to do something usefull (fill out)
 % Usage [out_param] = drawSinus(in_param)
 % Input Parameter:
@@ -19,10 +19,11 @@ global i;
 % plot
 set(gcf(), 'Renderer', 'OpenGL');
 contourf(x,y,z{i}, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
-colormap autumn;
+set(gca, 'xtick',[], 'ytick',[]);
+colormap hsv;
 
 i=i+1;
-if i>res
+if i>frames
     i=1;
 end
 

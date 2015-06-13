@@ -26,9 +26,6 @@ global f;
 T = 1/f;
 global p;
 
-
-% if the user has not submitted yet
-
 % stop old timers if exist
 if ~isempty(timerfind)
     stop(timerfind);
@@ -36,10 +33,10 @@ if ~isempty(timerfind)
 end
 
 % How many frames will be generated
-res = 4;
+frames = 3;
 if isempty(get(gcf, 'UserData'))
     % first, there is no wave function
-    zSum = cell(res,1);
+    zSum = cell(frames,1);
     zSum(:) = {0};    
     set(gcf, 'UserData', '2ndPass');
 end
@@ -56,8 +53,8 @@ yClick = point(1,2);
 [x,y] = meshgrid(-4:.1:4);
 
 % calculate time difference
-z=cell(res,1);k=0;
-t = linspace(0,T,res+1);
+z=cell(frames,1);k=0;
+t = linspace(0,T,frames+1);
 for t=t(1:end-1)
     k=k+1;
     % circular wave function
@@ -69,7 +66,7 @@ for t=t(1:end-1)
 end
 
 % Timer
-myTimer = timer('Period', 1/2, 'TimerFcn', {@drawWaves, x,y,z, res}, 'ExecutionMode', 'FixedRate');
+myTimer = timer('Period', 1/frames, 'TimerFcn', {@drawWaves, x,y,z, frames}, 'ExecutionMode', 'FixedRate');
 start(myTimer);
 uiwait(gcf());
 

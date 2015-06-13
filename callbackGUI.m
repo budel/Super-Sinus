@@ -1,4 +1,4 @@
-function edittext1_Callback(hObject,eventdata,frequency,amplitude,phase)
+function edittext1_Callback(hObject,eventdata,frequency,amplitude,phase,res)
 % function to do something usefull (fill out)
 % Usage [out_param] = callbackGUI(in_param)
 % Input Parameter:
@@ -15,17 +15,19 @@ function edittext1_Callback(hObject,eventdata,frequency,amplitude,phase)
 global f;
 global y0;
 global p;
+global frames;
 
 % get the input data and convert to double
 freq = str2double(get(frequency,'String'));
 ampl = str2double(get(amplitude,'String'));
 phase = str2double(get(phase,'String'));
+fr = str2double(get(res,'String'));
 
-if isnan(freq) || isnan(ampl) || isnan(phase)
+if isnan(freq) || isnan(ampl) || isnan(phase) || isnan(res)
   errordlg('Please enter a number','Bad Input','modal')
 	return    
 else
-    f = freq; y0 = ampl; p = phase;
+    f = freq; y0 = ampl; p = phase; frames = fr;
 end
 
 
