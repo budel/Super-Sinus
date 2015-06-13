@@ -20,15 +20,14 @@ function [frequency,amplitude,phase] = createGUI()
 %
 figure();
 set(gcf,'Color',[1,1,1]);
-uicontrol('style','text', 'string','TOPIC','ForegroundColor',[0 0 0],'BackgroundColor',[1 1 0],'FontSize',20,'FontWeight','bold', 'position',[160 300 140 40]);
-uicontrol('style','text', 'string','Frequency:','ForegroundColor',[0 0 0],'BackgroundColor',[1 1 0],'FontSize',20, 'position', [50 200 140 40]);
-uicontrol('style','text', 'string','Amplitude:','ForegroundColor',[0 0 0],'BackgroundColor',[1 0 1],'FontSize',20, 'position', [50 160 140 40]);
-uicontrol('style','text', 'string','Phase:','ForegroundColor',[0 0 0],'BackgroundColor',[0 1 1],'FontSize',20, 'position', [50 120 140 40]);
-frequency = uicontrol('style', 'edit','ForegroundColor',[0 0 0],'BackgroundColor',[1 1 0.5],'FontSize',10, 'string', '', 'position', [190 200 140 40]);
-amplitude = uicontrol('style', 'edit','ForegroundColor',[0 0 0],'BackgroundColor',[1 0.7 0],'FontSize',10, 'string', '', 'position', [190 160 140 40]);
-phase = uicontrol('style', 'edit','ForegroundColor',[0 0 0],'BackgroundColor',[0.8 1 1],'FontSize',10, 'string', '', 'position', [190 120 140 40]);
-fig = get(frequency,'String')
-uicontrol('style', 'pushbutton', 'string', 'submit','ForegroundColor',[0 0 0],'BackgroundColor',[0 1 1],'FontSize',20, 'position', [80 60 140 40]);
+uicontrol('style','text', 'string','TOPIC','ForegroundColor',[0 0 0],'BackgroundColor',[1 1 0],'FontSize',20,'FontWeight','bold', 'position',[.5 .5 .5 .5],'Units', 'normalized');
+uicontrol('style','text', 'string','Frequency:','ForegroundColor',[0 0 0],'BackgroundColor',[1 1 0],'FontSize',20, 'position', [50 200 140 40],'Units', 'normalized');
+uicontrol('style','text', 'string','Amplitude:','ForegroundColor',[0 0 0],'BackgroundColor',[1 0 1],'FontSize',20, 'position', [50 160 140 40],'Units', 'normalized');
+uicontrol('style','text', 'string','Phase:','ForegroundColor',[0 0 0],'BackgroundColor',[0 1 1],'FontSize',20, 'position', [50 120 140 40],'Units', 'normalized');
+frequency = uicontrol('style', 'edit','ForegroundColor',[0 0 0],'BackgroundColor',[1 1 0.5],'FontSize',10, 'string', '', 'position', [190 200 140 40],'Units', 'normalized');
+amplitude = uicontrol('style', 'edit','ForegroundColor',[0 0 0],'BackgroundColor',[1 0.7 0],'FontSize',10, 'string', '', 'position', [190 160 140 40],'Units', 'normalized');
+phase = uicontrol('style', 'edit','ForegroundColor',[0 0 0],'BackgroundColor',[0.8 1 1],'FontSize',10, 'string', '', 'position', [190 120 140 40],'Units', 'normalized');
+uicontrol('style', 'pushbutton', 'string', 'submit','Callback',{@callbackGUI,frequency,amplitude,phase},'ForegroundColor',[0 0 0],'BackgroundColor',[0 1 1],'FontSize',20, 'position', [80 60 140 40],'Units', 'normalized');
 
 
 

@@ -1,25 +1,16 @@
-function [frequency,amplitude,phase] = createGUI()
-% function to create a GUI in relation to superSinusGUI.m, in which the
-% user can change frequency, amplitude and phase
-%
-% Usage [frequency,amplitude,phase] = createGUI()
-% Input Parameter:
-%    non-existent
-% Output Parameter:
-%	 frequency:     frequency, the user chooses
-%    amplitude:     amplitude, the user chooses
-%    phase:         phase, the user chooses
-%------------------------------------------------------------------------ 
-
+% Script to test the function callbackGUI.m 
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
 % Version History:
-% Ver. 0.01 initial creation 12-Jun-2015  Initials DB and SV
+% Ver. 0.01 initial create (empty) 13-Jun-2015 			 Initials (eg. JB)
 
-%----------------------Start function------------------------------------ 
-hfig = figure();
-%create GUI-element
-hui = uicontrol();
+clear;
+close all;
+clc;
 
+%------------Your script starts here-------- 
+
+%Define your parameters and adjust your function call
+[out_param] = callbackGUI(in_param);
 
 
 %--------------------Licence ---------------------------------------------
