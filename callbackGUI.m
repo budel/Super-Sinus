@@ -3,24 +3,29 @@ function edittext1_Callback(hObject,eventdata,frequency,amplitude,phase)
 % Usage [out_param] = callbackGUI(in_param)
 % Input Parameter:
 %	 in_param: 		 Explain the parameter, default values, and units
-% Output Parameter:
-%	 out_param: 	 Explain the parameter, default values, and units
 %------------------------------------------------------------------------ 
 % Example: Provide example here if applicable (one or two lines) 
 
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
 % Version History:
-% Ver. 0.01 initial create (empty) 13-Jun-2015  Initials (eg. JB)
+% Ver. 0.01 initial create 13-Jun-2015  Initials DB and SV
 
 %------------Your function implementation here--------------------------- 
 
-freq = str2double(get(frequency,'String'))
-ampl = str2double(get(amplitude,'String'))
-phase = str2double(get(phase,'String'))
+global f;
+global y0;
+global p;
+
+% get the input data and convert to double
+freq = str2double(get(frequency,'String'));
+ampl = str2double(get(amplitude,'String'));
+phase = str2double(get(phase,'String'));
 
 if isnan(freq) || isnan(ampl) || isnan(phase)
   errordlg('Please enter a number','Bad Input','modal')
-	return
+	return    
+else
+    f = freq; y0 = ampl; p = phase;
 end
 
 

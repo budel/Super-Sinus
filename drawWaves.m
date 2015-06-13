@@ -1,4 +1,4 @@
-function drawWaves(timer, timerInfo,x,y,z)
+function drawWaves(timer, timerInfo,x,y,z, res)
 % function to do something usefull (fill out)
 % Usage [out_param] = drawSinus(in_param)
 % Input Parameter:
@@ -15,8 +15,6 @@ function drawWaves(timer, timerInfo,x,y,z)
 % Ver. 0.03 animation an calculation seperated 11-Jun-2015 Initials DB and SV
 
 global i;
-global f;
-T = 1/f;
 
 % plot
 set(gcf(), 'Renderer', 'OpenGL');
@@ -24,7 +22,7 @@ contourf(x,y,z{i}, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
 colormap autumn;
 
 i=i+1;
-if i>T
+if i>res
     i=1;
 end
 
