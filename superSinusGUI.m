@@ -8,7 +8,7 @@ function superSinusGUI
 % Ver. 0.04 GUI with buttons 13-Jun-2015 Initials DB and SV
 % Ver. 0.10 functional GUI with rainbow color 13-Jun-2015 Initials DB and SV
 
-% default values:
+% initialize default values:
 % Amplitude
 global y0; y0 = 1;
 % Frequency 
@@ -21,10 +21,11 @@ hfig = figure('MenuBar','none', 'Toolbar','none', 'Position',[50 50 840 500], 'C
 % create empty axes and show it
 wavePlot = axes('Parent',hfig, 'Units', 'pixels', 'Position',[50 50 400 400]);
 contourf([], [], []);
-axis([-4 4 -4 4]);
+axis([-4 4 -4 4]);  % this regulates the number of waves the user will see
 set(wavePlot, 'xtick',[], 'ytick',[]);
 
-% draw rest of the GUI
+% draw GUI with Edit-Fields for Amplitude, Frequency and Phase and a submit
+% button, which is connected to submitCallback
 posL = 500; posD = 410;
 w = 140; h = 40;
 uicontrol('style','text', 'string','Amplitude:','BackgroundColor',[1 0 0],'FontSize',20, 'position', [posL posD w h]);
@@ -33,23 +34,26 @@ uicontrol('style','text', 'string','Frequency:','BackgroundColor',[1 1 0],'FontS
 frequency = uicontrol('style','edit', 'string',num2str(f), 'BackgroundColor',[0 1 0],'FontSize',10, 'position', [posL+w posD-h w h]);
 uicontrol('style','text', 'string','Phase:','BackgroundColor',[0 0.5 0],'FontSize',20, 'position', [posL posD-2*h w h]);
 phase = uicontrol('style','edit', 'string',num2str(p), 'BackgroundColor',[0 0 1],'FontSize',10, 'position', [posL+w posD-2*h w h]);
-uicontrol('style', 'pushbutton', 'string', 'submit','Callback',{@callbackGUI,frequency,amplitude,phase},'BackgroundColor',[0.7 0 1],'FontSize',20, 'position', [posL+w/2 posD-4*h w h]);
+uicontrol('style', 'pushbutton', 'string', 'submit',...
+    'Callback',{@submitCallback,frequency,amplitude,phase},'BackgroundColor',[0.7 0 1],'FontSize',20, 'position', [posL+w/2 posD-4*h w h]);
 
 % attach mouseclick callback
 set(gca(),'ButtonDownFcn',@onMouseClick);
 
 end
 
+% if the GUI is closed
 function closeCallback(h,e)
     % stop old timers if exist
     if ~isempty(timerfind)
         stop(timerfind);
         delete(timerfind);
     end
+    % clear all global variables
+    clear global y0 f p zSum i;
+    % delete figure
     delete(h);
 end
-
-
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges

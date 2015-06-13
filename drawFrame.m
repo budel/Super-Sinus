@@ -1,31 +1,30 @@
-function drawWaves(timer, timerInfo,x,y,z, frames)
-% function to do something usefull (fill out)
-% Usage [out_param] = drawSinus(in_param)
-% Input Parameter:
-%	 in_param: 		 Explain the parameter, default values, and units
-% Output Parameter:
-%	 out_param: 	 Explain the parameter, default values, and units
-%------------------------------------------------------------------------ 
-% Example: Provide example here if applicable (one or two lines) 
+function drawFrame(timer, timerInfo,x,y,z, frames)
+% callback from timer to draw a frame from given x,y and z
 
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
 % Version History:
 % Ver. 0.01 initial create 23-May-2015  Initials DB and SV
 % Ver. 0.02 faster animation 10-Jun-2015 Initials DB and SV
-% Ver. 0.03 animation an calculation seperated 11-Jun-2015 Initials DB and SV
+% Ver. 0.03 animation and calculation seperated 11-Jun-2015 Initials DB and SV
+% Ver. 0.04 adjusted color for consistency in GUI 13-Jun-2015 Initials DB and SV
 
 global i;
 
-% plot
-set(gcf(), 'Renderer', 'OpenGL');
-contourf(x,y,z{i}, 'DisplayName',' 0.5', 'ButtonDownFcn', @onMouseClick);
-set(gca, 'xtick',[], 'ytick',[]);
+% plot using contourf
+set(gcf(), 'Renderer', 'OpenGL'); % fast rendering
+contourf(x,y,z{i}, 'ButtonDownFcn', @onMouseClick);
+set(gca, 'xtick',[], 'ytick',[]); % no axis visible
 colormap hsv;
 
+% iterate through every frame and start from the beginning, if there are no
+% frames left
 i=i+1;
 if i>frames
     i=1;
 end
+
+% clear global variable to avoid declaring the global after it has been referenced. 
+clear i;
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges

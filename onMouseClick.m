@@ -1,9 +1,10 @@
 function onMouseClick(h, e)
-% callback function to get Position of mouse Click
+% callback function to calculate a waveform depending on the mouseClick 
+% and draw it
 % Used in superSinusGUI
 % Input Parameter:
-%	 h: 		 handle
-%    e:          event
+%	 h: 		 handle of current axes (unused)
+%    e:          event of current axes (unused)
 %------------------------------------------------------------------------ 
 
 % Author: Daniel Budelmann and Sebastian Voges (c) TGM @ Jade Hochschule applied licence see EOF 
@@ -17,16 +18,12 @@ function onMouseClick(h, e)
 % Ver. 0.22 animation an calculation seperated 11-Jun-2015 Initials DB and SV
 % Ver. 0.23 parameters global 11-Jun-2015 Initials DB and SV
 
-global myTimer;
-global zSum;
-global i;
+% get global variables
+global zSum i y0 f p;
 i=1;
-global y0;
-global f;
 T = 1/f;
-global p;
 
-% stop old timers if exist
+% stop old timers if exist (from previous wave animations)
 if ~isempty(timerfind)
     stop(timerfind);
     delete(timerfind);
@@ -35,10 +32,10 @@ end
 % How many frames will be generated
 frames = 3;
 if isempty(get(gcf, 'UserData'))
-    % first, there is no wave function
+    % first, there is no previous wave function
     zSum = cell(frames,1);
-    zSum(:) = {0};    
-    set(gcf, 'UserData', '2ndPass');
+    zSum(:) = {0};
+    set(gcf, 'UserData', 'clickedAtLeastOnce');
 end
 
 
@@ -52,8 +49,11 @@ yClick = point(1,2);
 % fill x and y
 [x,y] = meshgrid(-4:.1:4);
 
-% calculate time difference
-z=cell(frames,1);k=0;
+% initialize z for all frames
+z=cell(frames,1);
+% calculate z for the specific parameters.
+% zSum is added to create interferences 
+k=0;
 t = linspace(0,T,frames+1);
 for t=t(1:end-1)
     k=k+1;
@@ -61,14 +61,17 @@ for t=t(1:end-1)
     r = sqrt((x-xClick).^2+(y-yClick).^2);
     z{k} = y0*sin(2*pi*( r-f*t+p) ) + zSum{k};
 
-    % save current wavefunction for later use:
+    % save current wavefunction results for later use:
     zSum{k} = z{k};
 end
 
-% Timer
-myTimer = timer('Period', 1/frames, 'TimerFcn', {@drawWaves, x,y,z, frames}, 'ExecutionMode', 'FixedRate');
+% start timer for animation purposes
+myTimer = timer('Period', 1/frames, 'TimerFcn', {@drawFrame, x,y,z, frames}, 'ExecutionMode', 'FixedRate');
 start(myTimer);
 uiwait(gcf());
+
+% clear global variables to avoid declaring the global after it has been referenced. 
+clear zSum i y0 f p;
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Daniel Budelmann and Sebastian Voges
